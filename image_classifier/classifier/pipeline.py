@@ -53,8 +53,17 @@ class MyImageDataGenerator(object):
             batch_size=self.batch_size,
             class_mode="categorical",
         )
+        train_samples = train_generator.samples
+        validation_samples = validation_generator.samples
+        batch_size = train_generator.batch_size
 
-        return train_generator, validation_generator
+        return (
+            train_generator,
+            validation_generator,
+            train_samples,
+            validation_samples,
+            batch_size,
+        )
 
 
 def main():
