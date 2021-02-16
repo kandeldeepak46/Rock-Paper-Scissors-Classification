@@ -35,14 +35,17 @@ from tensorflow.keras.utils import plot_model
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
+
+
 from pipeline import MyImageDataGenerator
-from tensorflow import keras
+
 
 MODEL_SAVE_DIR = os.path.join(
     os.path.dirname(__file__),
     "D:/image_classification/rock_paper_scissors_image_classification/models/",
 )
 MODEL_SAVE_PATH = MODEL_SAVE_DIR + "rock_paper_scissors.h5"
+
 
 
 class MyLenetArchitecture(object):
