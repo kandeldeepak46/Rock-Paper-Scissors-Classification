@@ -177,6 +177,108 @@ class MyKerasModels(object):
         return fcnn_model
 
 
+class MyPretrainedModel(object):
+
+    """
+    Boilerplate class for building the model for training the model using Pre-trained models of Deep Neural Network.
+
+    InceptionV3 and ResnNet50V2 are specificallly used in this case
+    ...
+    Attributes
+    ----------
+    batch_size : int
+        number of images, to pass to network in each iteration
+    img_height : int
+        specified height of the training image
+    img_width : int
+        specified width of training image
+    epochs: int
+        number of training iterations
+    learning_rate : float
+        training rate for neural network
+
+    """
+
+    def __init__(self, batch_size, img_height, img_width, epochs, learning_rate):
+
+        self.batch_size = batch_size
+        self.img_height = img_height
+        self.img_width = img_width
+        self.epochs = epochs
+        self.learning_rate = learning_rate
+        self.img_shape = (img_height, img_width, 3)
+        super(MyPretrainedModel, self).__init__()
+
+    def define_model(self, n_layers=150, BASE_MODEL="ResNet50V2"):
+        if BASE_MODEL == "ResNet50V2":
+
+            # Pre-trained model with MobileNetV2
+            base_model = ResNet50V2(
+                input_shape=self.img_shape, include_top=False, weights="imagenet"
+            )
+            head_model = base_model
+            for layers in base_model.layers[:n_layers]:
+                layers.trainable = False
+            head_model = head_model.output
+            head_model = tf.keras.layers.GlobalMaxPooling2D()(head_model)
+            head_model = tf.keras.layers.Flatten(name="Flatten")(head_model)
+            head_model = tf.keras.layers.Dense(1024, activation="relu")(head_model)
+            head_model = tf.keras.layers.Dropout(0.2)(head_model)
+            prediction_layer = tf.keras.layers.Dense(
+                len(CLASS_NAMES), activation="softmax"
+            )(head_model)
+            model = tf.keras.Model(inputs=base_model.input, outputs=prediction_layer)
+
+        if BASE_MODEL == "InceptionV3":
+            base_model = InceptionV3(
+                input_shape=self.img_shape, include_top=False, weights="imagenet"
+            )
+            head_model = base_model
+            for layers in base_model.layers[:n_layers]:
+                layers.trainable = False
+
+            head_model = head_model.output
+            head_model = tf.keras.layers.GlobalMaxPooling2D()(head_model)
+            head_model = tf.keras.layers.Flatten(name="Flatten")(head_model)
+            head_model = tf.keras.layers.Dense(1024, activation="relu")(head_model)
+            head_model = tf.keras.layers.Dropout(0.5)(head_model)
+            prediction_layer = tf.keras.layers.Dense(
+                len(CLASS_NAMES), activation="softmax"
+            )(head_model)
+            model = tf.keras.Model(inputs=base_model.input, outputs=prediction_layer)
+        return model
+
+    def train_model(self):
+
+        model = self.define_model(BASE_MODEL="InceptionV3")
+        model.compile(
+            loss="categorical_crossentropy",
+            optimizer=Adam(lr=0.01),
+            metrics=["accuracy"],
+        )
+        history = model.fit(
+            train_generator, epochs=5, verbose=1, validation_data=validation_generator
+        )
+        model.save(MODEL_SAVE_PATH)
+        # model.save(f"./saved_models/trained_model.h5")
+        return history
+
+    def show_metrics(history):
+        acc = history.history["accuracy"]
+        val_acc = history.history["val_accuracy"]
+        loss = history.hostory["loss"]
+        val_loss = history.history["val_loss"]
+
+        epochs = range(len(acc))
+
+        plt.plot(epochs, acc, "r", label="Training Accuracy")
+        plt.plot(epochs, val_acc, "b", label="Validation Accuracy")
+        plt.title("Training and Validation Accuracy")
+        plt.legend(loc=0)
+        plt.figure()
+        plt.show()
+
+
 def main():
     model = MyLenetArchitecture(224, 224, 3, 3)
     return_model = model.build_lenet_model()
