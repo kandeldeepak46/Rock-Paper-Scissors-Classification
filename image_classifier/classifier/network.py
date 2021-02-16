@@ -123,7 +123,7 @@ class MyKerasModels(object):
         self.image_channel = image_channel
         super(MyKerasModels, self).__init__()
 
-    def build_naive_model(self):
+    def build_naive_model(self, number_of_classes: int):
         model = tf.keras.Sequential(
             [
                 tf.keras.layers.Conv2D(
@@ -141,9 +141,11 @@ class MyKerasModels(object):
             ]
         )
 
-    def build_fcnn_from_vgg16(width, height, channels, num_class):
+    def build_fcnn_from_vgg16(self, number_of_classes: int):
         base_model = vgg16.VGG16(
-            weights="imagenet", include_top=False, input_shape=(width, height, channels)
+            weights="imagenet",
+            include_top=False,
+            input_shape=(self.width, self.height, self.image_channel),
         )
         fcnn_model = Sequential()
         for layer in base_model.layers:
@@ -154,12 +156,12 @@ class MyKerasModels(object):
         fcnn_model.add(
             Conv2D(filters=4096, kernel_size=(1, 1), name="fc2", activation="relu")
         )
-        fcnn_model.add(
-            Conv2D(filters=1000, kernel_size=(1, 1), name="predictions")
-        )
+        fcnn_model.add(Conv2D(filters=1000, kernel_size=(1, 1), name="predictions"))
         fcnn_model.add(Softmax4D(axis=-1, name="softmax"))
         vgg_top = vgg16.VGG16(
-            weights="imagenet", include_top=True, input_shape=(width, height, channels)
+            weights="imagenet",
+            include_top=True,
+            input_shape=(self.width, self.height, self.image_channels),
         )
         for layer in fcnn_model.layers:
             if layer.name.startswith("fc") or layer.name.startswith("pred"):
