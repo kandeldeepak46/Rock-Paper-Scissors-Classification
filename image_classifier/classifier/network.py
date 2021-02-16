@@ -47,7 +47,6 @@ MODEL_SAVE_DIR = os.path.join(
 MODEL_SAVE_PATH = MODEL_SAVE_DIR + "rock_paper_scissors.h5"
 
 
-
 class MyLenetArchitecture(object):
     def __init__(self, width, height, image_channel, number_of_classes):
         self.width = width
