@@ -42,7 +42,7 @@ from pipeline import MyImageDataGenerator
 
 MODEL_SAVE_DIR = os.path.join(
     os.path.dirname(__file__),
-    "D:/image_classification/rock_paper_scissors_image_classification/models/",
+    "D:/computer_vision/rock_paper_scissors_image_classification/models/",
 )
 MODEL_SAVE_PATH = MODEL_SAVE_DIR + "rock_paper_scissors.h5"
 
@@ -286,5 +286,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    print("my name is kandel deepak")
+    main()
+    # print("my name is kandel deepak")

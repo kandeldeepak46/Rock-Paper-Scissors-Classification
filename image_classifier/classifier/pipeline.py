@@ -5,12 +5,12 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator, load_img
 
 TRAIN_PATH = os.path.join(
     os.path.dirname(__file__),
-    "D:/image_classification/rock_paper_scissors_image_classification/data/train/",
+    "D:/computer_vision/rock_paper_scissors_image_classification/data/train/",
 )
 
 TEST_PATH = os.path.join(
     os.path.dirname(__file__),
-    "D:/image_classification/rock_paper_scissors_image_classification/data/test/",
+    "D:/computer_vision/rock_paper_scissors_image_classification/data/test/",
 )
 
 IMAGE_WIDTH = 224
