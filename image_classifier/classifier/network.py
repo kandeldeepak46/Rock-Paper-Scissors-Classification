@@ -42,7 +42,7 @@ from pipeline import MyImageDataGenerator
 
 MODEL_SAVE_DIR = os.path.join(
     os.path.dirname(__file__),
-    "D:/computer_vision/rock_paper_scissors_image_classification/models/",
+    "D:/Computer Vision/Rock-Paper-Scissors-Classification/models/",
 )
 
 MODEL_SAVE_PATH = MODEL_SAVE_DIR + "rock_paper_scissors.h5"
