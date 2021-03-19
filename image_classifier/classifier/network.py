@@ -116,7 +116,7 @@ class MyLenetArchitecture(object):
             validation_data=validation_generator,
             validation_steps=validation_samples // batch_size,
         )
-        self.model.save_weights(MODEL_SAVE_PATH)
+        self.model.save(MODEL_SAVE_PATH)
 
 
 class MyKerasModels(object):
