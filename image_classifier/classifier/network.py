@@ -265,6 +265,9 @@ class MyPretrainedModel(object):
         return history
 
     def show_metrics(history):
+        '''
+        plotting the losses and accuracy curves for evaluation
+        '''
         acc = history.history["accuracy"]
         val_acc = history.history["val_accuracy"]
         loss = history.hostory["loss"]
