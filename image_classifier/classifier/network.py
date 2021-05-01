@@ -265,9 +265,9 @@ class MyPretrainedModel(object):
         return history
 
     def show_metrics(history):
-        '''
+        """
         plotting the losses and accuracy curves for evaluation
-        '''
+        """
         acc = history.history["accuracy"]
         val_acc = history.history["val_accuracy"]
         loss = history.hostory["loss"]
@@ -284,9 +284,12 @@ class MyPretrainedModel(object):
 
 
 def main():
-    model = MyLenetArchitecture(224, 224, 3, 3)
-    return_model = model.build_lenet_model()
-    model.model_train(return_model, 10)
+    # model = MyLenetArchitecture(224, 224, 3, 3)
+    # return_model = model.build_lenet_model()
+    # model.model_train(return_model, 10)
+    model = MyPretrainedModel(32, 224, 224, 5, 0.001)
+    model.define_model()
+    model.train_model()
 
 
 if __name__ == "__main__":
