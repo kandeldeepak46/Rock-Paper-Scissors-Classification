@@ -30,7 +30,7 @@ from tensorflow.keras.preprocessing.image import (
     load_img,
     img_to_array,
 )
-from tensorflow.keras.applications import vgg16, VGG16
+from tensorflow.keras.applications import vgg16, VGG16, ResNet50V2
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.preprocessing import image
@@ -200,7 +200,14 @@ class MyPretrainedModel(object):
 
     """
 
-    def __init__(self, batch_size, img_height, img_width, epochs, learning_rate):
+    def __init__(
+        self,
+        batch_size: int,
+        img_height: int,
+        img_width: int,
+        epochs: int,
+        learning_rate: float,
+    ):
 
         self.batch_size = batch_size
         self.img_height = img_height
@@ -284,12 +291,12 @@ class MyPretrainedModel(object):
 
 
 def main():
-    # model = MyLenetArchitecture(224, 224, 3, 3)
-    # return_model = model.build_lenet_model()
-    # model.model_train(return_model, 10)
-    model = MyPretrainedModel(32, 224, 224, 5, 0.001)
-    model.define_model()
-    model.train_model()
+    model = MyLenetArchitecture(224, 224, 3, 3)
+    return_model = model.build_lenet_model()
+    model.model_train(return_model, 10)
+    # model = MyPretrainedModel(32, 224, 224, 5, 0.001)
+    # model.define_model()
+    # model.train_model()
 
 
 if __name__ == "__main__":
