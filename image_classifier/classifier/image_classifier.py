@@ -36,7 +36,7 @@ def load_image(img_path, show=False):
 if __name__ == "__main__":
     # loading the keras h5 model
     model = load_model(MODLE_PATH)
-    img_path = 'D:\Computer Vision\Rock-Paper-Scissors-Classification\examples\\testpaper01-00.png'
+    img_path = "D:\Computer Vision\Rock-Paper-Scissors-Classification\examples\\testpaper01-00.png"
 
     if not os.path.isfile(img_path):
         raise FileNotFoundError("please give the proper image path")

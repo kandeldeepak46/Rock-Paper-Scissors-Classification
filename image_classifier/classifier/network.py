@@ -28,11 +28,12 @@ from tensorflow.keras.preprocessing.image import (
     load_img,
     img_to_array,
 )
-from tensorflow.keras.applications import vgg16, VGG16, ResNet50V2
+from tensorflow.keras.applications import vgg16, VGG16, ResNet50V2, InceptionV3
 from tensorflow.keras.utils import plot_model
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.optimizers import Adam
 
 
 from pipeline import MyImageDataGenerator
@@ -44,6 +45,8 @@ MODEL_SAVE_DIR = os.path.join(
 )
 
 MODEL_SAVE_PATH = MODEL_SAVE_DIR + "rock_paper_scissors.h5"
+
+CLASS_NAMES = ["Paper", "Scissors", "Rock"]
 
 
 class MyLenetArchitecture(object):
@@ -257,6 +260,14 @@ class MyPretrainedModel(object):
     def train_model(self):
 
         model = self.define_model(BASE_MODEL="InceptionV3")
+        img_pipeline = MyImageDataGenerator()
+        (
+            train_generator,
+            validation_generator,
+            train_samples,
+            validation_samples,
+            batch_size,
+        ) = img_pipeline.image_pipeline()
         model.compile(
             loss="categorical_crossentropy",
             optimizer=Adam(lr=0.01),
@@ -289,12 +300,12 @@ class MyPretrainedModel(object):
 
 
 def main():
-    model = MyLenetArchitecture(224, 224, 3, 3)
-    return_model = model.build_lenet_model()
-    model.model_train(return_model, 10)
-    # model = MyPretrainedModel(32, 224, 224, 5, 0.001)
-    # model.define_model()
-    # model.train_model()
+    # model = MyLenetArchitecture(224, 224, 3, 3)
+    # return_model = model.build_lenet_model()
+    # model.model_train(return_model, 10)
+    model = MyPretrainedModel(32, 224, 224, 5, 0.001)
+    model.define_model()
+    model.train_model()
 
 
 if __name__ == "__main__":
