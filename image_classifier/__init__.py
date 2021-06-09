@@ -1,1 +1,1 @@
-from .classifier.network import MyKerasModels, MyLenetArchitecture, MyPretrainedModel
+from network import MyKerasModels, MyLenetArchitecture, MyPretrainedModel

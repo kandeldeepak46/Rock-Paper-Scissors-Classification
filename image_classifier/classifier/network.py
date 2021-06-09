@@ -6,8 +6,6 @@ try:
     import matplotlib.pyplot as plt
 except:
     pass
-import random
-import pathlib
 from PIL import Image
 import glob
 import tensorflow as tf
