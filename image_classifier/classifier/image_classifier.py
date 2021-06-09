@@ -20,7 +20,7 @@ if not os.path.isfile(MODLE_PATH):
 
 
 def load_image(img_path, show=False):
-    img = image.load_image(img_path, target_size=(150, 150))
+    img = image.load_img(img_path, target_size=(224, 224))
     img_tensor = image.img_to_array(img)
     img_tensor = np.expand_dims(img_tensor, axis=0)
     img_tensor = img_tensor / 255.0
@@ -36,12 +36,12 @@ def load_image(img_path, show=False):
 if __name__ == "__main__":
     # loading the keras h5 model
     model = load_model(MODLE_PATH)
-    img_path = sys.argv[1]
+    img_path = 'D:\Computer Vision\Rock-Paper-Scissors-Classification\examples\\testpaper01-00.png'
 
     if not os.path.isfile(img_path):
         raise FileNotFoundError("please give the proper image path")
-    new_image = load_image(img_path)
+    test_image = load_image(img_path)
 
-    pred = model.predit(new_image)
+    pred = model.predict(test_image)
 
     print(pred)
