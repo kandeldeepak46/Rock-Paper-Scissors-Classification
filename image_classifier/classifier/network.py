@@ -50,6 +50,9 @@ CLASS_NAMES = ["Paper", "Scissors", "Rock"]
 
 
 class MyLenetArchitecture(object):
+    """
+    This class defines the architecture of the LeNet model.
+    """
     def __init__(self, width, height, image_channel, number_of_classes):
         self.width = width
         self.height = height
@@ -96,7 +99,10 @@ class MyLenetArchitecture(object):
 
         return model
 
-    def model_train(self, model, epoch):
+    def model_train(self, model, epoch) -> None:
+        """
+        This function trains the model. It takes the model and the number of epochs as input. It returns the trained model. 
+        """
         self.model = model
         self.epoch = epoch
         img_pipeline = MyImageDataGenerator()
@@ -127,7 +133,14 @@ class MyKerasModels(object):
         self.image_channel = image_channel
         super(MyKerasModels, self).__init__()
 
-    def build_naive_model(self, number_of_classes: int):
+    def build_naive_model(self, number_of_classes: int) -> None:
+        """
+        This function builds the naive model. It takes the number of classes as input. It returns the model.
+        args:
+            number_of_classes: int
+        returns:    
+            model: model
+        """
         model = tf.keras.Sequential(
             [
                 tf.keras.layers.Conv2D(
